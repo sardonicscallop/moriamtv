@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';\
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'models.dart' as Models;
@@ -29,7 +29,7 @@ List<Models.Activity> parseActivities(String responseBody)
 
 
 
-Future<List<Models.Students>> fetchStudents(http.Client client) async
+Future<List<Models.Degree>> fetchStudents(http.Client client) async
 {
   final response = await client
       .get(Uri.parse(moriaApiAddress + "/students_list"));
@@ -38,9 +38,9 @@ Future<List<Models.Students>> fetchStudents(http.Client client) async
   return compute(parseStudents, response.body);
 }
 
-List<Models.Students> parseStudents(String responseBody)
+List<Models.Degree> parseStudents(String responseBody)
 {
   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
 
-  return parsed.map<Models.Students>((json) => Models.Students.fromJson(json)).toList();
+  return parsed.map<Models.Degree>((json) => Models.Degree.fromJson(json)).toList();
 }

@@ -4,22 +4,22 @@ class Event
 {
   final int id;
   final int weekday;
-  final String start_time;
+  final String startTime;
   final String length;
-  final String break_length;
-  final String end_time;
-  final int room_id;
-  final String room;
+  final String breakLength;
+  final String endTime;
+  final int roomId;
+  final String roomName;
 
   const Event({
     required this.id,
     required this.weekday,
-    required this.start_time,
+    required this.startTime,
     required this.length,
-    required this.break_length,
-    required this.end_time,
-    required this.room_id,
-    required this.room,
+    required this.breakLength,
+    required this.endTime,
+    required this.roomId,
+    required this.roomName,
   });
 
   factory Event.fromJson(Map<String, dynamic> json)
@@ -27,33 +27,33 @@ class Event
     return Event(
       id: json['id'] as int,
       weekday: json['weekday'] as int,
-      start_time: json['start_time'] as String,
+      startTime: json['start_time'] as String,
       length: json['length'] as String,
-      break_length: json['break_length'] as String,
-      end_time: json['end_time'] as String,
-      room_id: json['room_id'] as int,
-      room: json['room'] as String
+      breakLength: json['break_length'] as String,
+      endTime: json['end_time'] as String,
+      roomId: json['room_id'] as int,
+      roomName: json['room'] as String
     );
   }
 }
 
-class Students
+class Degree
 {
   final int id;
   final String name;
   final int group;
   final int groups;
 
-  const Students({
+  const Degree({
     required this.id,
     required this.name,
     required this.group,
     required this.groups,
   });
 
-  factory Students.fromJson(Map<String, dynamic> json)
+  factory Degree.fromJson(Map<String, dynamic> json)
   {
-    return Students(
+    return Degree(
       id: json['id'] as int,
       name: json['name'] as String,
       group: json['group'] as int,

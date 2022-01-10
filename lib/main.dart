@@ -35,7 +35,7 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: FutureBuilder<List<Models.Students>>(
+      body: FutureBuilder<List<Models.Degree>>(
         future: fetchStudents(http.Client()),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
