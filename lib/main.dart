@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -36,14 +33,15 @@ class MyHomePage extends StatelessWidget {
         title: Text(title),
       ),
       body: FutureBuilder<List<Models.Degree>>(
-        future: fetchStudents(http.Client()),
+        future: fetchDegrees(http.Client()),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
+            print(snapshot.toString());
             return const Center(
               child: Text('An error has occurred!'),
             );
           } else if (snapshot.hasData) {
-            return PhotosList(photos: snapshot.data!);
+            return DegreesList(degrees: snapshot.data!);
           } else {
             return const Center(
               child: CircularProgressIndicator(),
@@ -55,20 +53,17 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class PhotosList extends StatelessWidget {
-  const PhotosList({Key? key, required this.photos}) : super(key: key);
+class DegreesList extends StatelessWidget {
+  const DegreesList({Key? key, required this.degrees}) : super(key: key);
 
-  final List<Photo> photos;
+  final List<Models.Degree> degrees;
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-      ),
-      itemCount: photos.length,
+    return ListView.builder(
+      itemCount: degrees.length,
       itemBuilder: (context, index) {
-        return Image.network(photos[index].thumbnailUrl);
+        return Text(degrees[index].name);
       },
     );
   }
