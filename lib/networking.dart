@@ -17,7 +17,7 @@ Future<List<Models.Degree>> fetchDegrees(http.Client client) async
       .get(Uri.parse(moriaApiAddress + "/students_list"));
 
   // Using the compute function to run in a separate isolate.
-  return compute(parseDegrees, response.body);
+  return compute(parseDegrees, Utf8Decoder().convert(response.bodyBytes));
 }
 
 List<Models.Degree> parseDegrees(String responseBody)
