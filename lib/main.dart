@@ -63,7 +63,9 @@ class DegreesList extends StatelessWidget {
     return ListView.builder(
       itemCount: degrees.length,
       itemBuilder: (context, index) {
-        return Text(degrees[index].name);
+        return ListTile(
+            title: Text(degrees[index].name)
+        );
       },
     );
   }
