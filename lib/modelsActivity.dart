@@ -1,13 +1,15 @@
 // These classes mustn't be located in models.dart, because of name collisions.
 
+import 'package:flutter/material.dart';
+
 class Event
 {
   final int id;
   final int weekday;
-  final String startTime;
-  final String length;
-  final String breakLength;
-  final String endTime;
+  final TimeOfDay startTime;
+  final Duration length;
+  final Duration breakLength;
+  final TimeOfDay endTime;
   final int roomId;
   final String roomName;
 
@@ -27,10 +29,10 @@ class Event
     return Event(
       id: json['id'] as int,
       weekday: json['weekday'] as int,
-      startTime: json['start_time'] as String,
-      length: json['length'] as String,
-      breakLength: json['break_length'] as String,
-      endTime: json['end_time'] as String,
+      startTime: TimeOfDay(hour: json['start_time'].split(":")[0], minute: json['start_time'].split(":")[1]),
+      length: Duration(hours: json['length'].split(":")[0], minutes: json['length'].split(":")[1]),
+      breakLength: Duration(hours: json['break_length'].split(":")[0], minutes: json['break_length'].split(":")[1]),
+      endTime: TimeOfDay(hour: json['end_time'].split(":")[0], minute: json['end_time'].split(":")[1]),
       roomId: json['room_id'] as int,
       roomName: json['room'] as String
     );
