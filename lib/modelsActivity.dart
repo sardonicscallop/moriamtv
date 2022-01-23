@@ -4,10 +4,10 @@ class Event
 {
   final int id;
   final int weekday;
-  final String startTime;
-  final String length;
-  final String breakLength;
-  final String endTime;
+  final DateTime startTime;
+  final DateTime length;
+  final DateTime breakLength;
+  final DateTime endTime;
   final int roomId;
   final String roomName;
 
@@ -27,10 +27,10 @@ class Event
     return Event(
       id: json['id'] as int,
       weekday: json['weekday'] as int,
-      startTime: json['start_time'] as String,
-      length: json['length'] as String,
-      breakLength: json['break_length'] as String,
-      endTime: json['end_time'] as String,
+      startTime: DateTime.parse(json['start_time']),
+      length: DateTime.parse(json['length']),
+      breakLength: DateTime.parse(json['break_length']),
+      endTime: DateTime.parse(json['end_time']),
       roomId: json['room_id'] as int,
       roomName: json['room'] as String
     );
