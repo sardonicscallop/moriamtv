@@ -10,6 +10,26 @@ import 'models.dart' as Models;
 final String moriaSiteAddress = "http://moria.umcs.lublin.pl";
 final String moriaApiAddress = moriaSiteAddress + "/api";
 
+class SearchResultCategory {
+  String name;
+  List<Models.SearchResult> items;
+
+  SearchResultCategory({
+    required this.name,
+    required this.items
+});
+}
+
+
+Future<List<SearchResultCategory>> fetchSearchResults(http.Client client) async
+{
+  List<SearchResultCategory> searchResults = [];
+  searchResults.add(SearchResultCategory(name: "Degrees", items: await fetchDegrees(client)));
+  searchResults.add(SearchResultCategory(name: "Teachers", items: await fetchTeachers(client)));
+  searchResults.add(SearchResultCategory(name: "Rooms", items: await fetchRooms(client)));
+
+  return searchResults;
+}
 
 Future<List<Models.Degree>> fetchDegrees(http.Client client) async
 {
@@ -31,7 +51,7 @@ List<Models.Degree> parseDegrees(String responseBody)
 Future<List<Models.Teacher>> fetchTeachers(http.Client client) async
 {
   final response = await client
-      .get(Uri.parse(moriaApiAddress + "/students_list"));
+      .get(Uri.parse(moriaApiAddress + "/teacher_list"));
 
   // Using the compute function to run in a separate isolate.
   return compute(parseTeachers, Utf8Decoder().convert(response.bodyBytes));

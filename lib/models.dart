@@ -1,5 +1,16 @@
 import 'modelsActivity.dart' as ActivityModels;
 
+class SearchResult
+{
+  final int id;
+  final String name;
+
+  const SearchResult({
+    required this.id,
+    required this.name
+  });
+}
+
 class Activity
 {
   final int id;
@@ -43,7 +54,7 @@ class Activity
   }
 }
 
-class Room
+class Room extends SearchResult
 {
   final int id;
   final String name;
@@ -55,7 +66,7 @@ class Room
     required this.name,
     required this.departmentId,
     required this.quantity
-  });
+  }) : super(id:id, name:name);
 
   factory Room.fromJson(Map<String, dynamic> json)
   {
@@ -63,20 +74,19 @@ class Room
       id: json['id'] as int,
       name: json['name'] as String,
       departmentId: json['department_id'] as int,
-      quantity: json['quantity'] as int
+      quantity: json['quanitiy'] as int
     );
   }
 }
 
-class Degree
+class Degree extends SearchResult
 {
-  final int id;
-  final String name;
+
 
   const Degree({
-    required this.id,
-    required this.name
-  });
+    required id,
+    required name
+  }) : super(id:id, name:name);
 
   factory Degree.fromJson(Map<String, dynamic> json)
   {
@@ -87,7 +97,7 @@ class Degree
   }
 }
 
-class Teacher
+class Teacher extends SearchResult
 {
   final int id;
   final String degree;
@@ -100,17 +110,19 @@ class Teacher
     required this.degree,
     required this.department,
     required this.firstName,
-    required this.lastName
-  });
+    required this.lastName,
+    required name,
+  }): super(id:id,name:name);
 
   factory Teacher.fromJson(Map<String, dynamic> json)
   {
     return Teacher(
-        id: json['id'],
-        degree: json['degree'],
-        department: json['department'],
-        firstName: json['first_name'],
-        lastName: json['last_name']
+        id: json['id'] as int,
+        degree: json['degree'] as String,
+        department: json['department_id'] as int,
+        firstName: json['first_name'] as String,
+        lastName: json['last_name'] as String,
+        name: json['last_name'] + " " + json['first_name'] as String,
     );
   }
 }

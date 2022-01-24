@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '/models.dart' as Models;
 import '/networking.dart';
 
 class SearchWithinCheckbox extends StatelessWidget {
@@ -151,8 +150,8 @@ class _SearchScreenState extends State<SearchScreen> {
           )
         ),
         body:
-          FutureBuilder<List<Models.Degree>>(
-            future: fetchDegrees(http.Client()),
+          FutureBuilder<List<SearchResultCategory>>(
+            future: fetchSearchResults(http.Client()),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 print(snapshot.toString());
@@ -160,7 +159,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: Text('Error: ' + snapshot.error.toString()),
                 );
               } else if (snapshot.hasData) {
-                return DegreesList(degrees: snapshot.data!);
+                return SearchResultList(results: snapshot.data!);
               } else {
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -172,19 +171,23 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 }
 
+class SearchResultList extends StatelessWidget {
+  const SearchResultList({Key? key, required this.results}) : super(key: key);
 
-class DegreesList extends StatelessWidget {
-  const DegreesList({Key? key, required this.degrees}) : super(key: key);
-
-  final List<Models.Degree> degrees;
+  final List<SearchResultCategory> results;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: degrees.length,
+      itemCount: results.length,
       itemBuilder: (context, index) {
-        return ListTile(
-            title: Text(degrees[index].name)
+        return ExpansionTile(
+          title: Text(results[index].name),
+          children: <Widget>[
+            ...results[index].items.map((result) => ListTile(title: Text(result.name)))
+          ],
+
+
         );
       },
     );
