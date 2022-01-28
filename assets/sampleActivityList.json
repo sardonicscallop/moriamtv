@@ -1,0 +1,634 @@
+{
+    "result": {
+        "array": [
+            {
+                "event_array": [
+                    {
+                        "break_length": "00:00",
+                        "end_time": "14:00",
+                        "id": 44085,
+                        "length": "02:00",
+                        "room": "Aula Fizyki",
+                        "room_id": 22,
+                        "start_time": "12:00",
+                        "weekday": 1
+                    },
+                    {
+                        "break_length": "00:00",
+                        "end_time": "12:00",
+                        "id": 44859,
+                        "length": "02:00",
+                        "room": "Aula Fizyki",
+                        "room_id": 22,
+                        "start_time": "10:00",
+                        "weekday": 5
+                    },
+                    {
+                        "break_length": "00:00",
+                        "end_time": "11:00",
+                        "id": 44829,
+                        "length": "02:00",
+                        "room": "Aula Fizyki",
+                        "room_id": 22,
+                        "start_time": "09:00",
+                        "weekday": 3
+                    }
+                ],
+                "event_count": 3,
+                "id": 43683,
+                "students_array": [
+                    {
+                        "group": "1",
+                        "groups": "1",
+                        "id": 861,
+                        "name": "1 Fizyka I stopień stacjonarny"
+                    }
+                ],
+                "students_count": 1,
+                "subject": "Podstawy fizyki",
+                "subject_id": 18783,
+                "teacher_array": [
+                    {
+                        "id": 2041,
+                        "name": "dr hab. Michał Warda"
+                    }
+                ],
+                "teacher_count": 1,
+                "type": {
+                    "id": 1,
+                    "name": "wykład",
+                    "shortcut": "WY"
+                }
+            },
+            {
+                "event_array": [
+                    {
+                        "break_length": "00:00",
+                        "end_time": "14:00",
+                        "id": 44085,
+                        "length": "02:00",
+                        "room": "Aula Fizyki",
+                        "room_id": 22,
+                        "start_time": "12:00",
+                        "weekday": 1
+                    },
+                    {
+                        "break_length": "00:00",
+                        "end_time": "12:00",
+                        "id": 44859,
+                        "length": "02:00",
+                        "room": "Aula Fizyki",
+                        "room_id": 22,
+                        "start_time": "10:00",
+                        "weekday": 5
+                    },
+                    {
+                        "break_length": "00:00",
+                        "end_time": "11:00",
+                        "id": 44829,
+                        "length": "02:00",
+                        "room": "Aula Fizyki",
+                        "room_id": 22,
+                        "start_time": "09:00",
+                        "weekday": 3
+                    }
+                ],
+                "event_count": 3,
+                "id": 43683,
+                "students_array": [
+                    {
+                        "group": "1",
+                        "groups": "1",
+                        "id": 861,
+                        "name": "1 Fizyka I stopień stacjonarny"
+                    }
+                ],
+                "students_count": 1,
+                "subject": "Podstawy fizyki",
+                "subject_id": 18783,
+                "teacher_array": [
+                    {
+                        "id": 2041,
+                        "name": "dr hab. Michał Warda"
+                    }
+                ],
+                "teacher_count": 1,
+                "type": {
+                    "id": 1,
+                    "name": "wykład",
+                    "shortcut": "WY"
+                }
+            },
+            {
+                "event_array": [
+                    {
+                        "break_length": "00:00",
+                        "end_time": "14:00",
+                        "id": 44085,
+                        "length": "02:00",
+                        "room": "Aula Fizyki",
+                        "room_id": 22,
+                        "start_time": "12:00",
+                        "weekday": 1
+                    },
+                    {
+                        "break_length": "00:00",
+                        "end_time": "12:00",
+                        "id": 44859,
+                        "length": "02:00",
+                        "room": "Aula Fizyki",
+                        "room_id": 22,
+                        "start_time": "10:00",
+                        "weekday": 5
+                    },
+                    {
+                        "break_length": "00:00",
+                        "end_time": "11:00",
+                        "id": 44829,
+                        "length": "02:00",
+                        "room": "Aula Fizyki",
+                        "room_id": 22,
+                        "start_time": "09:00",
+                        "weekday": 3
+                    }
+                ],
+                "event_count": 3,
+                "id": 43683,
+                "students_array": [
+                    {
+                        "group": "1",
+                        "groups": "1",
+                        "id": 861,
+                        "name": "1 Fizyka I stopień stacjonarny"
+                    }
+                ],
+                "students_count": 1,
+                "subject": "Podstawy fizyki",
+                "subject_id": 18783,
+                "teacher_array": [
+                    {
+                        "id": 2041,
+                        "name": "dr hab. Michał Warda"
+                    }
+                ],
+                "teacher_count": 1,
+                "type": {
+                    "id": 1,
+                    "name": "wykład",
+                    "shortcut": "WY"
+                }
+            },
+            {
+                "event_array": [
+                    {
+                        "break_length": "00:30",
+                        "end_time": "14:30",
+                        "id": 44830,
+                        "length": "01:30",
+                        "room": "F3 (bud. A p. I)",
+                        "room_id": 25,
+                        "start_time": "12:30",
+                        "weekday": 4
+                    },
+                    {
+                        "break_length": "00:30",
+                        "end_time": "10:00",
+                        "id": 44891,
+                        "length": "01:30",
+                        "room": "F1 (bud. B półpiętro)",
+                        "room_id": 23,
+                        "start_time": "08:00",
+                        "weekday": 2
+                    }
+                ],
+                "event_count": 2,
+                "id": 43684,
+                "students_array": [
+                    {
+                        "group": "1",
+                        "groups": "1",
+                        "id": 861,
+                        "name": "1 Fizyka I stopień stacjonarny"
+                    }
+                ],
+                "students_count": 1,
+                "subject": "Podstawy fizyki",
+                "subject_id": 18784,
+                "teacher_array": [
+                    {
+                        "id": 744,
+                        "name": "dr Małgorzata Wiertel"
+                    }
+                ],
+                "teacher_count": 1,
+                "type": {
+                    "id": 3,
+                    "name": "konwersatorium",
+                    "shortcut": "KW"
+                }
+            },
+            {
+                "event_array": [
+                    {
+                        "break_length": "00:30",
+                        "end_time": "14:30",
+                        "id": 44830,
+                        "length": "01:30",
+                        "room": "F3 (bud. A p. I)",
+                        "room_id": 25,
+                        "start_time": "12:30",
+                        "weekday": 4
+                    },
+                    {
+                        "break_length": "00:30",
+                        "end_time": "10:00",
+                        "id": 44891,
+                        "length": "01:30",
+                        "room": "F1 (bud. B półpiętro)",
+                        "room_id": 23,
+                        "start_time": "08:00",
+                        "weekday": 2
+                    }
+                ],
+                "event_count": 2,
+                "id": 43684,
+                "students_array": [
+                    {
+                        "group": "1",
+                        "groups": "1",
+                        "id": 861,
+                        "name": "1 Fizyka I stopień stacjonarny"
+                    }
+                ],
+                "students_count": 1,
+                "subject": "Podstawy fizyki",
+                "subject_id": 18784,
+                "teacher_array": [
+                    {
+                        "id": 744,
+                        "name": "dr Małgorzata Wiertel"
+                    }
+                ],
+                "teacher_count": 1,
+                "type": {
+                    "id": 3,
+                    "name": "konwersatorium",
+                    "shortcut": "KW"
+                }
+            },
+            {
+                "event_array": [
+                    {
+                        "break_length": "00:30",
+                        "end_time": "10:00",
+                        "id": 44087,
+                        "length": "01:30",
+                        "room": "F2 (bud. A p. I)",
+                        "room_id": 24,
+                        "start_time": "08:00",
+                        "weekday": 1
+                    }
+                ],
+                "event_count": 1,
+                "id": 43685,
+                "students_array": [
+                    {
+                        "group": "1",
+                        "groups": "1",
+                        "id": 861,
+                        "name": "1 Fizyka I stopień stacjonarny"
+                    }
+                ],
+                "students_count": 1,
+                "subject": "Analiza matematyczna",
+                "subject_id": 18785,
+                "teacher_array": [
+                    {
+                        "id": 361,
+                        "name": "dr hab. Jerzy Matyjasek"
+                    }
+                ],
+                "teacher_count": 1,
+                "type": {
+                    "id": 1,
+                    "name": "wykład",
+                    "shortcut": "WY"
+                }
+            },
+            {
+                "event_array": [
+                    {
+                        "break_length": "01:15",
+                        "end_time": "12:00",
+                        "id": 44089,
+                        "length": "00:45",
+                        "room": "F3 (bud. A p. I)",
+                        "room_id": 25,
+                        "start_time": "10:00",
+                        "weekday": 1
+                    }
+                ],
+                "event_count": 1,
+                "id": 43687,
+                "students_array": [
+                    {
+                        "group": "1",
+                        "groups": "1",
+                        "id": 861,
+                        "name": "1 Fizyka I stopień stacjonarny"
+                    }
+                ],
+                "students_count": 1,
+                "subject": "Repetytorium z fizyki",
+                "subject_id": 18790,
+                "teacher_array": [
+                    {
+                        "id": 744,
+                        "name": "dr Małgorzata Wiertel"
+                    }
+                ],
+                "teacher_count": 1,
+                "type": {
+                    "id": 3,
+                    "name": "konwersatorium",
+                    "shortcut": "KW"
+                }
+            },
+            {
+                "event_array": [
+                    {
+                        "break_length": "01:15",
+                        "end_time": "17:00",
+                        "id": 44090,
+                        "length": "00:45",
+                        "room": "F6 (bud. C p. I)",
+                        "room_id": 28,
+                        "start_time": "15:00",
+                        "weekday": 2
+                    }
+                ],
+                "event_count": 1,
+                "id": 43688,
+                "students_array": [
+                    {
+                        "group": "1",
+                        "groups": "1",
+                        "id": 861,
+                        "name": "1 Fizyka I stopień stacjonarny"
+                    }
+                ],
+                "students_count": 1,
+                "subject": "Repetytorium z matematyki",
+                "subject_id": 18791,
+                "teacher_array": [
+                    {
+                        "id": 460,
+                        "name": "prof. dr hab. Andrzej Góźdź"
+                    }
+                ],
+                "teacher_count": 1,
+                "type": {
+                    "id": 3,
+                    "name": "konwersatorium",
+                    "shortcut": "KW"
+                }
+            },
+            {
+                "event_array": [
+                    {
+                        "break_length": "00:15",
+                        "end_time": "12:30",
+                        "id": 44091,
+                        "length": "02:15",
+                        "room": "363 Fiz L",
+                        "room_id": 73,
+                        "start_time": "10:00",
+                        "weekday": 2
+                    }
+                ],
+                "event_count": 1,
+                "id": 43689,
+                "students_array": [
+                    {
+                        "group": "1",
+                        "groups": "2",
+                        "id": 861,
+                        "name": "1 Fizyka I stopień stacjonarny"
+                    }
+                ],
+                "students_count": 1,
+                "subject": "Pracownia fizyczna wstępna",
+                "subject_id": 18792,
+                "teacher_array": [
+                    {
+                        "id": 1983,
+                        "name": "dr Waldemar Berej"
+                    }
+                ],
+                "teacher_count": 1,
+                "type": {
+                    "id": 2,
+                    "name": "laboratorium",
+                    "shortcut": "LB"
+                }
+            },
+            {
+                "event_array": [
+                    {
+                        "break_length": "00:15",
+                        "end_time": "13:30",
+                        "id": 44092,
+                        "length": "00:45",
+                        "room": "Fiz K 251",
+                        "room_id": 2,
+                        "start_time": "12:30",
+                        "weekday": 3
+                    }
+                ],
+                "event_count": 1,
+                "id": 43690,
+                "students_array": [
+                    {
+                        "group": "1",
+                        "groups": "1",
+                        "id": 861,
+                        "name": "1 Fizyka I stopień stacjonarny"
+                    }
+                ],
+                "students_count": 1,
+                "subject": " Metody opracowania wyników\npomiarów ",
+                "subject_id": 18793,
+                "teacher_array": [
+                    {
+                        "id": 3219,
+                        "name": "mgr Karolina Marciszuk"
+                    }
+                ],
+                "teacher_count": 1,
+                "type": {
+                    "id": 1,
+                    "name": "wykład",
+                    "shortcut": "WY"
+                }
+            },
+            {
+                "event_array": [
+                    {
+                        "break_length": "00:00",
+                        "end_time": "09:30",
+                        "id": 44093,
+                        "length": "01:30",
+                        "room": "Fiz K 251",
+                        "room_id": 2,
+                        "start_time": "08:00",
+                        "weekday": 4
+                    }
+                ],
+                "event_count": 1,
+                "id": 43691,
+                "students_array": [
+                    {
+                        "group": "1",
+                        "groups": "1",
+                        "id": 861,
+                        "name": "1 Fizyka I stopień stacjonarny"
+                    }
+                ],
+                "students_count": 1,
+                "subject": " Metody opracowania wyników\npomiarów ",
+                "subject_id": 18794,
+                "teacher_array": [
+                    {
+                        "id": 3219,
+                        "name": "mgr Karolina Marciszuk"
+                    }
+                ],
+                "teacher_count": 1,
+                "type": {
+                    "id": 2,
+                    "name": "laboratorium",
+                    "shortcut": "LB"
+                }
+            },
+            {
+                "event_array": [
+                    {
+                        "break_length": "00:30",
+                        "end_time": "16:30",
+                        "id": 44094,
+                        "length": "01:30",
+                        "room": "Fiz K 260",
+                        "room_id": 3,
+                        "start_time": "14:30",
+                        "weekday": 4
+                    }
+                ],
+                "event_count": 1,
+                "id": 43692,
+                "students_array": [
+                    {
+                        "group": "1",
+                        "groups": "1",
+                        "id": 861,
+                        "name": "1 Fizyka I stopień stacjonarny"
+                    }
+                ],
+                "students_count": 1,
+                "subject": "Technologie informacyjne",
+                "subject_id": 18795,
+                "teacher_array": [
+                    {
+                        "id": 248,
+                        "name": "dr hab. Andrzej Staszczak"
+                    }
+                ],
+                "teacher_count": 1,
+                "type": {
+                    "id": 2,
+                    "name": "laboratorium",
+                    "shortcut": "LB"
+                }
+            },
+            {
+                "event_array": [
+                    {
+                        "break_length": "00:00",
+                        "end_time": "11:00",
+                        "id": 44831,
+                        "length": "01:30",
+                        "room": "F3 (bud. A p. I)",
+                        "room_id": 25,
+                        "start_time": "09:30",
+                        "weekday": 4
+                    }
+                ],
+                "event_count": 1,
+                "id": 44416,
+                "students_array": [
+                    {
+                        "group": "1",
+                        "groups": "1",
+                        "id": 861,
+                        "name": "1 Fizyka I stopień stacjonarny"
+                    }
+                ],
+                "students_count": 1,
+                "subject": "Analiza matematyczna",
+                "subject_id": 18789,
+                "teacher_array": [
+                    {
+                        "id": 2041,
+                        "name": "dr hab. Michał Warda"
+                    }
+                ],
+                "teacher_count": 1,
+                "type": {
+                    "id": 3,
+                    "name": "konwersatorium",
+                    "shortcut": "KW"
+                }
+            },
+            {
+                "event_array": [
+                    {
+                        "break_length": "00:15",
+                        "end_time": "15:00",
+                        "id": 44833,
+                        "length": "02:15",
+                        "room": "363 Fiz L",
+                        "room_id": 73,
+                        "start_time": "12:30",
+                        "weekday": 2
+                    }
+                ],
+                "event_count": 1,
+                "id": 44418,
+                "students_array": [
+                    {
+                        "group": "2",
+                        "groups": "2",
+                        "id": 861,
+                        "name": "1 Fizyka I stopień stacjonarny"
+                    }
+                ],
+                "students_count": 1,
+                "subject": "Pracownia fizyczna wstępna",
+                "subject_id": 18792,
+                "teacher_array": [
+                    {
+                        "id": 1983,
+                        "name": "dr Waldemar Berej"
+                    }
+                ],
+                "teacher_count": 1,
+                "type": {
+                    "id": 2,
+                    "name": "laboratorium",
+                    "shortcut": "LB"
+                }
+            }
+        ],
+        "count": 14
+    },
+    "status": "ok"
+}

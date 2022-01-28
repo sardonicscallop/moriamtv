@@ -29,12 +29,12 @@ class Event
     return Event(
       id: json['id'] as int,
       weekday: json['weekday'] as int,
-      startTime: TimeOfDay(hour: json['start_time'].split(":")[0], minute: json['start_time'].split(":")[1]),
-      length: Duration(hours: json['length'].split(":")[0], minutes: json['length'].split(":")[1]),
-      breakLength: Duration(hours: json['break_length'].split(":")[0], minutes: json['break_length'].split(":")[1]),
-      endTime: TimeOfDay(hour: json['end_time'].split(":")[0], minute: json['end_time'].split(":")[1]),
+      startTime: TimeOfDay(hour: int.parse(json['start_time'].split(":")[0]), minute: int.parse(json['start_time'].split(":")[1])),
+      length: Duration(hours: int.parse(json['length'].split(":")[0]), minutes: int.parse(json['length'].split(":")[1])),
+      breakLength: Duration(hours: int.parse(json['break_length'].split(":")[0]), minutes: int.parse(json['break_length'].split(":")[1])),
+      endTime: TimeOfDay(hour: int.parse(json['end_time'].split(":")[0]), minute: int.parse(json['end_time'].split(":")[1])),
       roomId: json['room_id'] as int,
-      roomName: json['room'] as String
+      roomName: json['room'] as String,
     );
   }
 }
@@ -58,8 +58,8 @@ class Degree
     return Degree(
       id: json['id'] as int,
       name: json['name'] as String,
-      group: json['group'] as int,
-      groups: json['groups'] as int
+      group: int.parse(json['group']),
+      groups: int.parse(json['groups'])
     );
   }
 }

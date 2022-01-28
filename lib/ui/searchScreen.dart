@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:moriamtv/ui/timetableScreen.dart';
 
 import '/networking.dart';
 
@@ -171,23 +172,37 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 }
 
-class SearchResultList extends StatelessWidget {
+class SearchResultList extends StatefulWidget {
   const SearchResultList({Key? key, required this.results}) : super(key: key);
 
   final List<SearchResultCategory> results;
 
   @override
+  _SearchResultListState createState() => _SearchResultListState();
+}
+
+class _SearchResultListState extends State<SearchResultList> {
+
+  @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: results.length,
+      itemCount: widget.results.length,
       itemBuilder: (context, index) {
         return ExpansionTile(
-          title: Text(results[index].name),
+          title: Text(widget.results[index].name),
           children: <Widget>[
-            ...results[index].items.map((result) => ListTile(title: Text(result.name)))
+            ...widget.results[index].items.map(
+                    (result) => ListTile(
+                        title: Text(result.name),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => TimetableScreen(entity: result))
+                          );
+                        }
+                    )
+            )
           ],
-
-
         );
       },
     );

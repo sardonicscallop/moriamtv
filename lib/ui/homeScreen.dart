@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'timetableScreen.dart';
+import '../data/models.dart' as Models;
 
 
 class HomeScreen extends StatelessWidget {
@@ -17,21 +19,43 @@ class HomeScreen extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: [
               const DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                  ),
-                  child: Text("Drawer header")
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Text("Drawer header")
               ),
               ListTile(
-                  title: const Text("Home"),
-                  leading: const Icon(Icons.home)
+                title: const Text("Home"),
+                leading: const Icon(Icons.home)
               ),
               ListTile(
-                  title: const Text("Search"),
-                  leading: const Icon(Icons.search),
+                title: const Text("Search"),
+                leading: const Icon(Icons.search),
                 onTap: () {
                   Navigator.pushNamed(context, '/searchScreen');
-                })
+                }
+              ),
+              ListTile(
+                  title: const Text("Mockup table"),
+                  leading: const Icon(Icons.table_chart_outlined),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context)
+                            => TimetableScreen(
+                              entity: Models.SearchResult(id: 0, name: "MOCKUP", entityType: Models.EntityType.degree),
+                              useMockup: true))
+                    );
+                  }
+              ),
+              ListTile(
+                title: const Text("Settings"),
+                leading: const Icon(Icons.settings),
+              ),
+              ListTile(
+                title: const Text("About"),
+                leading: const Icon(Icons.info),
+              )
             ],
           )
       ),

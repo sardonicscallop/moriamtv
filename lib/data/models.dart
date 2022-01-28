@@ -1,13 +1,22 @@
 import 'modelsActivity.dart' as ActivityModels;
 
+
+enum EntityType {
+  degree,
+  teacher,
+  room
+}
+
 class SearchResult
 {
   final int id;
   final String name;
+  final EntityType entityType;
 
   const SearchResult({
     required this.id,
-    required this.name
+    required this.name,
+    required this.entityType
   });
 }
 
@@ -66,7 +75,7 @@ class Room extends SearchResult
     required this.name,
     required this.departmentId,
     required this.quantity
-  }) : super(id:id, name:name);
+  }) : super(id:id, name:name, entityType: EntityType.room);
 
   factory Room.fromJson(Map<String, dynamic> json)
   {
@@ -74,7 +83,7 @@ class Room extends SearchResult
       id: json['id'] as int,
       name: json['name'] as String,
       departmentId: json['department_id'] as int,
-      quantity: json['quanitiy'] as int
+      quantity: json['quanitiy'] as int // don't correct, server sends reply with this typo
     );
   }
 }
@@ -86,7 +95,7 @@ class Degree extends SearchResult
   const Degree({
     required id,
     required name
-  }) : super(id:id, name:name);
+  }) : super(id:id, name:name, entityType: EntityType.degree);
 
   factory Degree.fromJson(Map<String, dynamic> json)
   {
@@ -112,7 +121,7 @@ class Teacher extends SearchResult
     required this.firstName,
     required this.lastName,
     required name,
-  }): super(id:id,name:name);
+  }): super(id:id,name:name, entityType: EntityType.teacher);
 
   factory Teacher.fromJson(Map<String, dynamic> json)
   {
