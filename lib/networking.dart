@@ -71,7 +71,6 @@ class MoriaClient extends http.BaseClient {
 
     return this.send(_request);
   }
-
 }
 
 class SearchResultCategory {

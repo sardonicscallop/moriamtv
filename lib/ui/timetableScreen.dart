@@ -263,6 +263,7 @@ class EventWidget extends StatelessWidget {
          * pxPerHour;
     final double paddingVertical = 8;
     final double paddingHorizontal = 16;
+    final double typeIconSize = (IconTheme.of(context).size ?? 22) * 3;
     final int groupNo = event.degrees.first.group;      // todo: check context degree,
     final int groupsTotal = event.degrees.first.groups; // ←
     final bool isGroup = (groupsTotal > 1) ? true : false; // todo: adjust width according to number of groups
@@ -290,36 +291,12 @@ class EventWidget extends StatelessWidget {
               fit: StackFit.expand,
               children: [
                 Positioned(
-                  child: ListTile(
-                    //minVerticalPadding: paddingVertical,
-                    //horizontalTitleGap: paddingHorizontal,
-                    title: Text(
-                      event.subject.name,
-                      /*, style: TextStyle(fontWeight: FontWeight.bold)*/
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ...event.teachers.map((e) => Text(e.name)),
-                        ...event.degrees.map((e) => Text(e.name))
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                    bottom: 0,
-                    left: 0,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(paddingHorizontal, 0, 0, paddingVertical),
-                      child: Text(event.room.name,
-                        style: TextStyle(
-                          color: ListTileTheme.of(context).textColor,
-                          // fontStyle: FontStyle.italic
-                        )
-                      ),
-                    )
+                    bottom: typeIconSize * -0.125,
+                    left: typeIconSize * -0.25,
+                    child: Icon(
+                      pickIconForActivityType(event.type.id),
+                      size: typeIconSize,
+                      color: Colors.white38)
                 ),
                 if(isGroup)
                   Positioned(
@@ -327,15 +304,47 @@ class EventWidget extends StatelessWidget {
                       right: 0,
                       height: height,
                       child: Baseline(
-                        baseline: height,
-                        baselineType: TextBaseline.alphabetic,
-                        child: Text(
-                          groupNo.toString(),
+                          baseline: height,
+                          baselineType: TextBaseline.alphabetic,
+                          child: Text(
+                            groupNo.toString(),
+                            style: TextStyle(
+                              color: Colors.white60,
+                              fontSize: DefaultTextStyle.of(context).style.fontSize! * 5,
+                            ),
+                          )
+                      )
+                  ),
+                  Positioned(
+                    child: ListTile(
+                      //minVerticalPadding: paddingVertical,
+                      //horizontalTitleGap: paddingHorizontal,
+                      title: Text(
+                        event.subject.name,
+                        /*, style: TextStyle(fontWeight: FontWeight.bold)*/
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ...event.teachers.map((e) => Text(e.name)),
+                          ...event.degrees.map((e) => Text(e.name))
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                      bottom: 0,
+                      left: 0,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(paddingHorizontal, 0, 0, paddingVertical),
+                        child: Text(event.room.name,
                           style: TextStyle(
-                            color: Colors.white60,
-                            fontSize: DefaultTextStyle.of(context).style.fontSize! * 5,
-                          ),
-                        )
+                            color: ListTileTheme.of(context).textColor,
+                            // fontStyle: FontStyle.italic
+                          )
+                        ),
                       )
                   ),
               ],
