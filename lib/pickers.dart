@@ -50,8 +50,10 @@ IconData pickIconForActivityType (int typeId) {
     Icons.menu_book,        // wykład
     MdiIcons.radioactive,   // laboratorium
     MdiIcons.leadPencil,    // konwersatorium
+    MdiIcons.setSquare,     // ćwiczenia
+    Icons.forum,            // seminarium
   ];
-  if(typeId > icons.length)
+  if(typeId > icons.length - 1)
     return icons[0];
   else
     return icons[typeId];
