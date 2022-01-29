@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:moriamtv/data/standaloneEvent.dart' as StandaloneEvent;
 import 'package:moriamtv/pickers.dart';
 
@@ -21,7 +22,7 @@ class EventDetails extends StatelessWidget {
           iconColor: Colors.white,
         ),
         ListTile(
-          leading: Icon(Icons.door_front_door),
+          leading: Icon(MdiIcons.door),
           title: Text(event.room.name),
         ),
         ListTile(
