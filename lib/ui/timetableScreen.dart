@@ -25,8 +25,9 @@ class TimetableScreen extends StatelessWidget {
     // Flutter: 0 – Sunday, 1 – Monday, ..., 6 – Saturday
 
     initializeDateFormatting("pl_PL", null); // todo: implement localisation
+    final unscheduled = "unscheduled";
     final List<String> weekdayNames = [
-      "unplanned",
+      unscheduled,
       ...DateFormat.EEEE(/*Localizations.localeOf(context).toLanguageTag()*/"pl_PL").dateSymbols.STANDALONEWEEKDAYS.skip(1),
       DateFormat.EEEE("pl_PL").dateSymbols.STANDALONEWEEKDAYS[0],
     ];
@@ -48,7 +49,7 @@ class TimetableScreen extends StatelessWidget {
           bottom: TabBar(
             isScrollable: true,
             tabs: <Tab>[ // todo: internationalisation
-              ...weekdayNames.map((element) => Tab(child: Text(element, style: TextStyle(fontStyle: element == "unplanned" ? FontStyle.italic : FontStyle.normal),)))
+              ...weekdayNames.map((element) => Tab(child: Text(element, style: TextStyle(fontStyle: element == unscheduled ? FontStyle.italic : FontStyle.normal),)))
             ],
           ),
         ),
@@ -100,7 +101,6 @@ class TabbedTimetableView extends StatelessWidget {
                 degrees: activity.degrees,
                 teachers: activity.teachers,
                 room: StandaloneEvent.Room(id: event.roomId, name: event.roomName)
-                // activityColor:
             ));
       }
     }
@@ -296,8 +296,8 @@ class EventWidget extends StatelessWidget {
                     title: Text(
                       event.subject.name,
                       /*, style: TextStyle(fontWeight: FontWeight.bold)*/
-                      // maxLines: 1,
-                      // overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
