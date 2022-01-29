@@ -4,13 +4,75 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'data/models.dart' as Models;
-
 
 final String moriaSiteAddress = "moria.umcs.lublin.pl";
 final String moriaApiAddress = "/api";
 
+
+
+class MoriaClient extends http.BaseClient {
+  final String moriaSiteAddress = "moria.umcs.lublin.pl";
+  final String moriaApiAddress = "/api";
+
+  final _inner = http.Client();
+  MoriaClient() : super();
+
+  send(http.BaseRequest request) async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    request.headers['user-agent'] = "${packageInfo.appName}/${packageInfo.version}";
+    request.headers['content-type'] = "application/json";
+    return _inner.send(request);
+  }
+
+  Future<http.StreamedResponse> getActivities(Models.EntityType entity, int entityId) {
+    String path;
+    switch(entity) {
+      case Models.EntityType.degree:
+        path = moriaApiAddress + "/activity_list_for_students";
+        break;
+      case Models.EntityType.teacher:
+        path = moriaApiAddress + "/activity_list_for_teacher";
+        break;
+      case Models.EntityType.room:
+        path = moriaApiAddress + "/activity_list_for_room";
+        break;
+    }
+
+    // Moria server can't be addressed using URI only, when you have to send
+    // additional parameters. Somebody who coded this probably had no idea, that
+    // it would be so much simpler, if parameters were parsed inside an URI,
+    // with ?id=<int> on it. Instead, you have to attach them in a request body.
+
+    final _request = http.Request("GET", Uri.http(moriaSiteAddress, path));
+    _request.body = jsonEncode({"id": entityId});
+    _request.bodyBytes = utf8.encode(_request.body);
+
+    return this.send(_request);
+  }
+
+  Future<http.StreamedResponse> getListOfEntities(Models.EntityType entity) {
+    String path;
+    switch(entity) {
+      case Models.EntityType.degree:
+        path = moriaApiAddress + "/students_list";
+        break;
+      case Models.EntityType.teacher:
+        path = moriaApiAddress + "/teacher_list";
+        break;
+      case Models.EntityType.room:
+        path = moriaApiAddress + "/room_list";
+        break;
+    }
+
+    final _request = http.Request("GET", Uri.http(moriaSiteAddress, path));
+
+    return this.send(_request);
+  }
+
+}
 
 class SearchResultCategory {
   String name;
@@ -83,28 +145,13 @@ List<Models.Room> parseRooms(String responseBody)
 
 Future<List<Models.Activity>> fetchActivities(http.Client client, Models.EntityType entity, int id) async
 {
-  final String path;
-  switch(entity) {
-    case Models.EntityType.degree:
-      path = moriaApiAddress + "/activity_list_for_students";
-      break;
-    case Models.EntityType.teacher:
-      path = moriaApiAddress + "/activity_list_for_teacher";
-      break;
-    case Models.EntityType.room:
-      path = moriaApiAddress + "/activity_list_for_room";
-      break;
-  }
 
   // Moria server can't be addressed using URI only, when you have to send
   // additional parameters. Somebody who coded this probably had no idea, that
   // it would be so much simpler, if parameters were parsed inside an URI, with
   // ?id=<int> on it. Instead, you have to attach them in a request body.
 
-  http.Request request = http.Request("GET", Uri.http(moriaSiteAddress, path));
-  request.body = '{ "id": "' + id.toString() + '"}';
-
-  final response = await client.send(request);
+  final response = await MoriaClient().getActivities(entity, id);
   final responseBytes = await response.stream.toBytes();
 
   return compute(parseActivities, Utf8Decoder().convert(responseBytes));
@@ -121,8 +168,6 @@ List<Models.Activity> parseActivities(String responseBody)
   if(parsed['status'] == "error")
     throw Exception("Server reported error. Response: " + responseBody);
 
-  // var picker = new MaterialColorPicker();
-
-  return parsed['result']['array'].map<Models.Activity>((json) => Models.Activity.fromJson(json, /* picker.pickColorForActivity(json['id']) */)).toList();
+  return parsed['result']['array'].map<Models.Activity>((json) => Models.Activity.fromJson(json)).toList();
 }
 
