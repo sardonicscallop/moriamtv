@@ -13,6 +13,7 @@ class EventDetails extends StatelessWidget {
     return Wrap(
       children: [
         ListTile(
+          minVerticalPadding: 16.0,
           leading: Icon(pickIconForActivityType(event.type.id)),
           title: Text(event.subject.name),
           subtitle: Text(event.type.name, style: TextStyle(fontStyle: FontStyle.italic)),
