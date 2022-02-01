@@ -328,8 +328,14 @@ class EventWidget extends StatelessWidget {
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ...event.teachers.map((e) => Text(e.name)),
-                          ...event.degrees.map((e) => Text(e.name))
+                          if(event.teachers.length > 1)
+                            Text("${event.teachers.length} teachers")
+                          else
+                             ...event.teachers.map((e) => Text(e.name, maxLines: 1, overflow: TextOverflow.ellipsis,)),
+                          if(event.degrees.length > 1)
+                            Text("${event.degrees.length} degrees")
+                          else
+                            ...event.degrees.map((e) => Text(e.name, maxLines: 1, overflow: TextOverflow.ellipsis,))
                         ],
                       ),
                     ),
