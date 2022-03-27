@@ -41,6 +41,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          titleSpacing: 0.0,
           title: TextField(
             controller: searchBoxController,
             cursorColor: Colors.white,
@@ -49,7 +50,7 @@ class _SearchScreenState extends State<SearchScreen> {
               hintText: "Search",
               hintStyle: TextStyle(color: Colors.white),
               prefixIcon: Icon(Icons.search, color: Colors.white),
-              suffix: 
+              suffixIcon:
                 InkWell(
                   child: Icon(Icons.clear, color: Colors.white),
                   onTap: () { searchBoxController.text = ""; }
