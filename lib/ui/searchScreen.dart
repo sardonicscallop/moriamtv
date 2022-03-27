@@ -3,56 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:moriamtv/ui/timetableScreen.dart';
 
 import '/networking.dart';
+import 'package:moriamtv/data/models.dart' as Models;
 
-class SearchWithinCheckbox extends StatelessWidget {
-  const SearchWithinCheckbox({
-    Key? key,
-    required this.title,
-    required this.padding,
-    required this.value,
-    required this.onChanged,
-    this.checkColor,
-    this.fillColor,
-  }) : super(key: key);
-
-
-  final Widget title;
-  final EdgeInsets padding;
-  final bool value;
-  final ValueChanged<bool> onChanged;
-  final Color? checkColor;
-  final MaterialStateProperty<Color>? fillColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        onChanged(!value);
-      },
-      child: Padding(
-        padding: padding,
-        child: Column(
-          children: [
-            Row(
-              children: <Widget>[
-                Checkbox(
-                  value: value,
-                  onChanged: (bool? newValue) {
-                    onChanged(newValue!);
-                  },
-                  checkColor: checkColor,
-                  fillColor: fillColor,
-                ),
-                title,
-              ],
-            )
-          ],
-        )
-
-      ),
-    );
-  }
-}
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -63,17 +15,19 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
 
-  final searchBoxController = TextEditingController();
-
-  bool _searchDegrees = true;
-  bool _searchTeachers = true;
-  bool _searchRooms = true;
-
+  TextEditingController searchBoxController = new TextEditingController();
+  String filter = "";
+  List<SearchResultCategory> resultsList = [];
 
   @override
   void initState() {
     super.initState();
-    searchBoxController.addListener(_showSearchResults);
+
+    searchBoxController.addListener(() {
+        setState(() {
+          filter = searchBoxController.text;
+        });
+    });
   }
 
   @override
@@ -82,10 +36,6 @@ class _SearchScreenState extends State<SearchScreen> {
     super.dispose();
   }
 
-  void _showSearchResults() {
-    // todo sth there
-    print(searchBoxController.text);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,56 +49,16 @@ class _SearchScreenState extends State<SearchScreen> {
               hintText: "Search",
               hintStyle: TextStyle(color: Colors.white),
               prefixIcon: Icon(Icons.search, color: Colors.white),
+              suffix: 
+                InkWell(
+                  child: Icon(Icons.clear, color: Colors.white),
+                  onTap: () { searchBoxController.text = ""; }
+                ),
               enabledBorder: InputBorder.none,
               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
               focusColor: Colors.white,
               ),
             ),
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(60.0),
-            child: Row(
-              /*scrollDirection: Axis.horizontal,
-              shrinkWrap: true, */
-              children: [
-                SearchWithinCheckbox(
-                  value: _searchDegrees,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _searchDegrees = value!;
-                    });
-                    },
-                  title: Text("Degrees", style: TextStyle(color: Colors.white)),
-                  padding: const EdgeInsets.all(5.0),
-                  fillColor: MaterialStateProperty.all(Colors.white),
-                  checkColor: Colors.blue,
-                ),
-                SearchWithinCheckbox(
-                  value: _searchTeachers,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _searchTeachers = value!;
-                    });
-                  },
-                  title: Text("Teachers", style: TextStyle(color: Colors.white)),
-                  padding: const EdgeInsets.all(5.0),
-                  fillColor: MaterialStateProperty.all(Colors.white),
-                  checkColor: Colors.blue,
-                ),
-                SearchWithinCheckbox(
-                  value: _searchRooms,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _searchRooms = value!;
-                    });
-                  },
-                  title: Text("Rooms", style: TextStyle(color: Colors.white)),
-                  padding: const EdgeInsets.all(5.0),
-                  fillColor: MaterialStateProperty.all(Colors.white),
-                  checkColor: Colors.blue,
-                ),
-              ]
-            )
-          )
         ),
         body:
           FutureBuilder<List<SearchResultCategory>>(
@@ -160,7 +70,17 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: Text('Error: ' + snapshot.error.toString()),
                 );
               } else if (snapshot.hasData) {
-                return SearchResultList(results: snapshot.data!);
+                resultsList = snapshot.data!;
+                if((filter.isNotEmpty)) {
+                  for (SearchResultCategory x in resultsList) {
+                    List<Models.SearchResult> toRemove = [];
+                    for (Models.SearchResult y in x.items)
+                      if (!y.name.toLowerCase().contains(filter.toLowerCase()))
+                        toRemove.add(y);
+                    x.items.removeWhere((element) => toRemove.contains(element));
+                  }
+                }
+                return SearchResultList(results: resultsList);
               } else {
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -203,6 +123,7 @@ class _SearchResultListState extends State<SearchResultList> {
                     )
             )
           ],
+          initiallyExpanded: true,
         );
       },
     );
