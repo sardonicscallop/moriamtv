@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'modelsActivity.dart' as ActivityModels;
+import 'models.dart' as Models;
 
 class Subject {
   final int id;
@@ -44,4 +45,30 @@ class StandaloneEvent {
     required this.room,
     // this.activityColor,
   });
+}
+
+
+List<List<StandaloneEvent>> getStandaloneEventsTable(List<Models.Activity> activities) {
+  List<List<StandaloneEvent>> eventsByWeekdays = [ for(int k = 0; k < 8; k++) [] ];
+  for (Models.Activity activity in activities) {
+    for (ActivityModels.Event event in activity.events) {
+      eventsByWeekdays[event.weekday].add(
+          StandaloneEvent(
+              eventId: event.id,
+              startTime: event.startTime,
+              length: event.length,
+              endTime: event.endTime,
+              breakLength: event.breakLength,
+
+              activityId: activity.id,
+              subject: Subject(
+                  id: activity.subjectId, name: activity.subjectName),
+              type: activity.type,
+              degrees: activity.degrees,
+              teachers: activity.teachers,
+              room: Room(id: event.roomId, name: event.roomName)
+          ));
+    }
+  }
+  return eventsByWeekdays;
 }

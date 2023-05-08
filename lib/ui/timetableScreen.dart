@@ -1,16 +1,17 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
-import 'package:moriamtv/ui/eventDetails.dart';
 
 import '/data/models.dart' as Models;
-import '/data/modelsActivity.dart' as ActivityModels;
 import '/data/standaloneEvent.dart' as StandaloneEvent;
 import '/networking.dart';
 import '/pickers.dart';
+import '/ui/eventCard.dart';
+import '/ui/uiMessageHandler.dart';
 
 
 class TimetableScreen extends StatelessWidget {
@@ -26,84 +27,117 @@ class TimetableScreen extends StatelessWidget {
 
     initializeDateFormatting("pl_PL", null); // todo: implement localisation
     final unscheduled = "unscheduled";
-    final List<String> weekdayNames = [
+    List<String> weekdayNames = [
       unscheduled,
       ...DateFormat.EEEE(/*Localizations.localeOf(context).toLanguageTag()*/"pl_PL").dateSymbols.STANDALONEWEEKDAYS.skip(1),
       DateFormat.EEEE("pl_PL").dateSymbols.STANDALONEWEEKDAYS[0],
     ];
 
-    return DefaultTabController(
-      length: weekdayNames.length,
-      initialIndex: 1,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(entity.name),
-          backgroundColor: pickPrimaryColorForDegree(entity.id),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.favorite_border), // todo: implement favorites
-              tooltip: "Add to favorites",
-              onPressed: () { },
-            ),
-          ],
-          bottom: TabBar(
-            isScrollable: true,
-            tabs: <Tab>[ // todo: internationalisation
-              ...weekdayNames.map((element) => Tab(child: Text(element, style: TextStyle(fontStyle: element == unscheduled ? FontStyle.italic : FontStyle.normal),)))
-            ],
-          ),
-        ),
-        body:
-          FutureBuilder<List<Models.Activity>>(
-            future: useMockup==true ? getMockup() : fetchActivities(http.Client(), entity.entityType, entity.id),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                print(snapshot.toString());
-                return Center(
-                  child: Text('Error: ' + snapshot.error.toString()),
-                );
-              } else if (snapshot.hasData) {
-                return TabbedTimetableView(activities: snapshot.data!);
-              } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
-          ),
-      ),
+    return FutureBuilder<List<List<StandaloneEvent.StandaloneEvent>>>(
+//      future: useMockup==true ? getMockup() : fetchActivities(http.Client(), entity.entityType, entity.id),
+      future: () async {
+        final activities = useMockup==true ? await getMockup() : await fetchActivities(http.Client(), entity.entityType, entity.id);
+        List<List<StandaloneEvent.StandaloneEvent>> eventsByWeekdays = StandaloneEvent.getStandaloneEventsTable(activities);
+        return eventsByWeekdays;
+      } (),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          print(snapshot.toString());
+          return Scaffold(
+              appBar: AppBar(
+                  title: /* Text(entity.name), */ Text('Error'),
+                  // backgroundColor: pickPrimaryColorForEntity(entity.id),
+                  actions: [
+                    IconButton(
+                      icon: const Icon(Icons.refresh),
+                      tooltip: "Reload",
+                      onPressed: () async {  }
+                    ),
+                  ]
+              ),
+              body: UiMessageHandler(messageText: 'Network connection error: ' + snapshot.error.toString(), messageType: UiMessageType.error),
+          );
+        } else if (snapshot.hasData) {
+            return DefaultTabController(
+              length: snapshot.data!.first.isEmpty ? weekdayNames.length - 1 : weekdayNames.length,
+              initialIndex: () {
+                int weekday = DateTime.now().weekday;
+                weekday--;
+                if(snapshot.data!.first.isNotEmpty) weekday++;
+                return weekday;
+              } (),
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text(entity.name),
+                  backgroundColor: pickPrimaryColorForEntity(entity.id),
+                  actions: [
+                    IconButton(
+                      icon: const Icon(Icons.link),
+                      tooltip: "Copy link",
+                      onPressed: () async { // todo: use variable to store moria address
+                        String clipboardText = "http://moria.umcs.lublin.pl/";
+                        switch(entity.entityType) {
+                          case Models.EntityType.degree:
+                            clipboardText += "students/";
+                            break;
+
+                          case Models.EntityType.room:
+                            clipboardText += "room/";
+                            break;
+
+                          case Models.EntityType.teacher:
+                            clipboardText += "teacher/";
+                            break;
+                        }
+
+                        clipboardText += entity.id.toString();
+
+                        await Clipboard.setData(ClipboardData(text: clipboardText));
+
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Copied link to the clipboard.")));
+                      }
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.favorite_border), // todo: implement favorites
+                      tooltip: "Add to favorites",
+                      onPressed: () { },
+                    ),
+                  ],
+                  bottom: snapshot.data!.every((e) => e.isEmpty)
+                          ? TabBar(
+                              isScrollable: true,
+                              tabs: () {
+                                if(snapshot.data!.first.isEmpty) weekdayNames.removeAt(0);
+                                return <Tab>[
+                                  ...weekdayNames.map((element) => Tab(child: Text(element, style: TextStyle(fontStyle: element == unscheduled ? FontStyle.italic : FontStyle.normal),)))
+                                ];
+                              } ()
+                            )
+                          : null
+                ),
+                body: snapshot.data!.every((e) => e.isEmpty)
+                    ? UiMessageHandler(messageText: 'This entity is empty.', messageType: UiMessageType.info)
+                    : TabbedTimetableView(eventsByWeekdays: snapshot.data!)
+              ),
+            );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }
 
 class TabbedTimetableView extends StatelessWidget {
-  const TabbedTimetableView({Key? key, required this.activities}) : super(key: key);
+  const TabbedTimetableView({Key? key, required this.eventsByWeekdays}) : super(key: key);
 
-  final List<Models.Activity> activities;
+  final List<List<StandaloneEvent.StandaloneEvent>> eventsByWeekdays;
 
   @override
   Widget build(BuildContext context) {
-    List<List<StandaloneEvent.StandaloneEvent>> eventsByWeekdays = [ for(int k = 0; k < 8; k++) [] ];
-    for (Models.Activity activity in activities) {
-      for (ActivityModels.Event event in activity.events) {
-        eventsByWeekdays[event.weekday].add(
-            StandaloneEvent.StandaloneEvent(
-                eventId: event.id,
-                startTime: event.startTime,
-                length: event.length,
-                endTime: event.endTime,
-                breakLength: event.breakLength,
-
-                activityId: activity.id,
-                subject: StandaloneEvent.Subject(
-                  id: activity.subjectId, name: activity.subjectName),
-                type: activity.type,
-                degrees: activity.degrees,
-                teachers: activity.teachers,
-                room: StandaloneEvent.Room(id: event.roomId, name: event.roomName)
-            ));
-      }
-    }
+    if(eventsByWeekdays.first.isEmpty) eventsByWeekdays.removeAt(0);
 
     return TabBarView(
       children: <Widget>[
@@ -155,7 +189,7 @@ class WeekdayTab extends StatelessWidget {
                   children: [
                     if (events.isNotEmpty)
                       ...events.map((e)
-                          => EventWidget(
+                          => EventPositionedWidget(
                             event: e,
                             dayStartTime: dayStartTime,
                             width: MediaQuery.of(context).size.width - rulerWidth,
@@ -241,8 +275,8 @@ class Ruler extends StatelessWidget {
   }
 }
 
-class EventWidget extends StatelessWidget {
-  EventWidget({
+class EventPositionedWidget extends StatelessWidget {
+  EventPositionedWidget({
     Key? key,
     required this.event,
     required this.dayStartTime,
@@ -261,11 +295,9 @@ class EventWidget extends StatelessWidget {
         ((event.endTime.hour.toDouble() - event.startTime.hour.toDouble())
          + (event.endTime.minute.toDouble() - event.startTime.minute.toDouble()) / 60)
          * pxPerHour;
-    final double paddingVertical = 8;
-    final double paddingHorizontal = 16;
-    final double typeIconSize = (IconTheme.of(context).size ?? 22) * 3;
-    final int groupNo = event.degrees.first.group;      // todo: check context degree,
-    final int groupsTotal = event.degrees.first.groups; // ←
+    // degrees can be empty sometimes, so there's a need of implementing this check.
+    final int groupNo = event.degrees.isNotEmpty ? event.degrees.first.group : 1 ;     // todo: check context degree,
+    final int groupsTotal = event.degrees.isNotEmpty ? event.degrees.first.groups : 1; // ←
     final bool isGroup = (groupsTotal > 1) ? true : false; // todo: adjust width according to number of groups
 
     return Positioned(
@@ -275,88 +307,7 @@ class EventWidget extends StatelessWidget {
       width: isGroup ? width * (1 - 0.1 * (groupsTotal - 1)) : width,
       child: Padding(
         padding: EdgeInsets.all(0.0),
-        child: Card(
-          color: pickPrimaryColorForActivity(event.activityId).shade100,
-          shadowColor: pickPrimaryColorForActivity(event.activityId).shade700,
-          child: InkWell(
-            splashColor: Colors.blue.withAlpha(30),
-            onTap: () {
-              showBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return EventDetails(event: event);
-                  });
-            },
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Positioned(
-                    bottom: typeIconSize * -0.125,
-                    left: typeIconSize * -0.25,
-                    child: Icon(
-                      pickIconForActivityType(event.type.id),
-                      size: typeIconSize,
-                      color: Colors.white38)
-                ),
-                if(isGroup)
-                  Positioned(
-                      bottom: 0,
-                      right: 0,
-                      height: height,
-                      child: Baseline(
-                          baseline: height,
-                          baselineType: TextBaseline.alphabetic,
-                          child: Text(
-                            groupNo.toString(),
-                            style: TextStyle(
-                              color: Colors.white60,
-                              fontSize: DefaultTextStyle.of(context).style.fontSize! * 5,
-                            ),
-                          )
-                      )
-                  ),
-                  Positioned(
-                    child: ListTile(
-                      //minVerticalPadding: paddingVertical,
-                      //horizontalTitleGap: paddingHorizontal,
-                      title: Text(
-                        event.subject.name,
-                        /*, style: TextStyle(fontWeight: FontWeight.bold)*/
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if(event.teachers.length > 1)
-                            Text("${event.teachers.length} teachers")
-                          else
-                             ...event.teachers.map((e) => Text(e.name, maxLines: 1, overflow: TextOverflow.ellipsis,)),
-                          if(event.degrees.length > 1)
-                            Text("${event.degrees.length} degrees")
-                          else
-                            ...event.degrees.map((e) => Text(e.name, maxLines: 1, overflow: TextOverflow.ellipsis,))
-                        ],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                      bottom: 0,
-                      left: 0,
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(paddingHorizontal, 0, 0, paddingVertical),
-                        child: Text(event.room.name,
-                          style: TextStyle(
-                            color: ListTileTheme.of(context).textColor,
-                            // fontStyle: FontStyle.italic
-                          )
-                        ),
-                      )
-                  ),
-              ],
-            )
-          )
-        ),
+        child: EventCard(event: event)
       )
     );
   }

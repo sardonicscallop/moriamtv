@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moriamtv/ui/settingsScreen.dart';
 
 import 'ui/homeScreen.dart';
 import 'ui/searchScreen.dart';
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const HomeScreen(title: appTitle),
-        '/searchScreen': (context) => const SearchScreen()
+        '/searchScreen': (context) => const SearchScreen(),
+        '/settingsScreen': (context) => SettingsScreen()
       }
     );
   }

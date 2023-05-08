@@ -47,14 +47,15 @@ class _SearchScreenState extends State<SearchScreen> {
             cursorColor: Colors.white,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
-              hintText: "Search",
-              hintStyle: TextStyle(color: Colors.white),
+              hintText: "Search...",
+              hintStyle: TextStyle(color: Colors.white38),
               prefixIcon: Icon(Icons.search, color: Colors.white),
-              suffixIcon:
-                InkWell(
-                  child: Icon(Icons.clear, color: Colors.white),
-                  onTap: () { searchBoxController.text = ""; }
-                ),
+              suffixIcon: searchBoxController.text != ""
+                  ? InkWell(
+                      child: Icon(Icons.clear, color: Colors.white),
+                      onTap: () { searchBoxController.text = ""; }
+                    )
+                  : null,
               enabledBorder: InputBorder.none,
               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
               focusColor: Colors.white,

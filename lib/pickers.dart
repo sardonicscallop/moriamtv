@@ -39,8 +39,10 @@ MaterialColor pickPrimaryColorForActivity(int activityId) {
   return Colors.primaries[colorId];
 }
 
-MaterialColor pickPrimaryColorForDegree(int activityId) {
-  int colorId = activityId % Colors.primaries.length;
+MaterialColor pickPrimaryColorForEntity(int entityId) {
+  int colorId = entityId % Colors.primaries.length;
+  if(Colors.primaries[colorId] == Colors.yellow)
+    colorId++;
   return Colors.primaries[colorId];
 }
 
