@@ -104,7 +104,8 @@ class TimetableScreen extends StatelessWidget {
                     ),
                   ],
                   bottom: snapshot.data!.every((e) => e.isEmpty)
-                          ? TabBar(
+                          ? null
+                          : TabBar(
                               isScrollable: true,
                               tabs: () {
                                 if(snapshot.data!.first.isEmpty) weekdayNames.removeAt(0);
@@ -112,8 +113,7 @@ class TimetableScreen extends StatelessWidget {
                                   ...weekdayNames.map((element) => Tab(child: Text(element, style: TextStyle(fontStyle: element == unscheduled ? FontStyle.italic : FontStyle.normal),)))
                                 ];
                               } ()
-                            )
-                          : null
+                  )
                 ),
                 body: snapshot.data!.every((e) => e.isEmpty)
                     ? UiMessageHandler(messageText: 'This entity is empty.', messageType: UiMessageType.info)
