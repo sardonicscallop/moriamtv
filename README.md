@@ -4,11 +4,7 @@ Mobile client for Moria timetabling system, used by Marie Curie University in Lu
 
 Screenshots from 0.1 build:
 
-<img src="screenshots/screenshot01.jpg" style="width: 20%; height: 20%">
-<img src="screenshots/screenshot02.jpg" style="width: 20%; height: 20%">
-<img src="screenshots/screenshot03.jpg" style="width: 20%; height: 20%">
-<img src="screenshots/screenshot04.jpg" style="width: 20%; height: 20%">
-<img src="screenshots/screenshot05.jpg" style="width: 20%; height: 20%">
+<img src="screenshots/screenshot01.jpg" style="width: 20%; height: 20%"> <img src="screenshots/screenshot02.jpg" style="width: 20%; height: 20%"> <img src="screenshots/screenshot03.jpg" style="width: 20%; height: 20%"> <img src="screenshots/screenshot04.jpg" style="width: 20%; height: 20%"> <img src="screenshots/screenshot05.jpg" style="width: 20%; height: 20%">
 
 ## Functionality
 
