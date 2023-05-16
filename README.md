@@ -1,16 +1,29 @@
 # moriamtv
 
-A new Flutter project.
+Mobile client for Moria timetabling system, used by Marie Curie University in Lublin, Poland.
 
-## Getting Started
+Screenshots from 0.1 build:
 
-This project is a starting point for a Flutter application.
+![screenshot01.jpg](screenshots/screenshot01.jpg) ![screenshot02.jpg](screenshots/screenshot02.jpg) ![screenshot03.jpg](screenshots/screenshot03.jpg) ![screenshot04.jpg](screenshots/screenshot04.jpg) ![screenshot05.jpg](screenshots/screenshot05.jpg) 
 
-A few resources to get you started if this is your first Flutter project:
+## Functionality
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Implemented:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* online searching and viewing of timetables
+* clickable links between different timetables
+* sharing link to a timetable via clipboard
+
+Planned:
+
+* favorities viewed on app drawer
+* scroll animation on long entity names
+* user interface in multiple languages
+* timetable caching
+* ability to pick a plan that's being showed on front page
+* export to calendar
+* tablet view
+
+## Installation
+
+Check „Releases” for alpha build.
